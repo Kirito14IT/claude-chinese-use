@@ -1,68 +1,45 @@
-# 写给中文用户的 Claude Code 上手和排错
+# Claude Code 中文上手教程
 
 简体中文 · [English](README.en.md)
 
-我本来只是想用 Claude Code 改论文，找师兄一问，结果先卡在了 VPS 的 SSH 上。后来订阅能用了，又遇到了节点超时和账号验证。我把当时的过程按顺序捋了一遍，方便你对照自己卡在哪一步。[原始聊天记录](docs/chat.md)
+我把上手过程写成了三步。要在自己有权配置的网络上自建代理，就从第 1 步开始。网络已经能正常连接的，直接看第 3 步开通 Pro 和登录 Claude Code。
 
-## 先确认所在地区
+## 1. 买一台 VPS
 
-截至 2026 年 11 月 20 日，中国大陆未列入 Anthropic 的支持地区。政策按用户实际所在地和组织资格判断，涵盖 Claude 网页版、Claude Code、API 及授权合作方提供的 Claude。网络配置和 Claude 账号是否可用是两件事。[Anthropic 支持地区政策](https://www.anthropic.com/legal/supported-regions)
+1. 打开服务商的产品页，选一台 Linux VPS。拿 **DigitalVirt 洛杉矶 9929** 做例子，套餐截图里的入门档是 **39 元/月**。如果这档售罄，又想马上开通同一条线路，就选还有库存的更高价档。下单时以页面上的价格和库存为准。
+2. 系统选 **Ubuntu**，确认服务商提供网页控制台，再选付款周期、完成下单。网页控制台在 SSH 掉线或连不上时能用来查看服务器状态。
+3. 开通后，在服务商的控制台找到服务器地址、SSH 端口和登录信息。先从自己电脑用 SSH 连进去，也可以通过网页控制台打开终端。确认能登录再装面板。
 
-## 从 VPS 到 Clash Verge
+[DigitalVirt（推广链接）](https://digitalvirt.com/aff.php?aff=1572) · [套餐截图](docs/media/vps-plan.png) · [下单界面](docs/media/vps-ubuntu-order.png)
 
-下面是为自己有权限使用的机器和网络配置代理时，可以依次检查的步骤。
+## 2. 用 3x-ui 导出订阅，再导入 Clash Verge
 
-### 1. 租一台 Linux VPS，先确认能登录
+1. **装面板。** 在你管理的 VPS 上按项目说明安装 **3x-ui**。登录面板，为自己的设备配置入站和客户端，确认 Xray 正常运行。[3x-ui 安装说明](https://github.com/MHSanaei/3x-ui/wiki/Installation) · [入站配置](https://github.com/MHSanaei/3x-ui/blob/main/docs/content/docs/en/config/inbounds.mdx)
+2. **复制订阅。** 到 **面板设置 → 订阅** 打开订阅服务，再从客户端条目复制对应的 **订阅链接**。面板提供 Clash 格式时选这个格式。这个链接会把节点配置交给 Clash Verge，留在自己的设备上用。[3x-ui 订阅说明](https://github.com/MHSanaei/3x-ui/wiki/Common-questions-and-problems#13-how-does-the-panel-subscription-link-work)
+3. **导入并启用。** 在电脑上安装 **Clash Verge Rev**，打开 **订阅** 页，粘贴链接、导入并选中新配置。到 **代理** 页确认能看到节点，选 **规则** 模式，再开启 **系统代理**。先用浏览器打开一个你有权访问的站点，到连接列表确认规则有没有生效。[客户端下载](https://www.clashverge.dev/install.html) · [订阅导入](https://www.clashverge.dev/guide/profile.html) · [系统代理设置](docs/media/clash-rule-mode.png)
 
-对话里用的是一台 1 GB 的 Ubuntu VPS。选机器时先确认套餐能装你熟悉的 Linux，服务商有网页控制台，方便 SSH 连不上时进去看日志。下单后，用服务商给的地址和 SSH 端口连接，凭据留在本地。先确认本地网络能连到 VPS 的入口、能进终端，再装面板。原始聊天里有当时看到的机房、套餐截图和推广链接。
+## 3. 开通 Pro，登录 Claude Code
 
-聊天时看到的 DigitalVirt 洛杉矶 9929，入门档标的是 **39 元/月**。如果这档已经售罄，你又想马上买同一条线路，就得选还有库存的更高价档。下单时以页面上的价格和库存为准。[当时的套餐截图](docs/media/vps-plan.png)
+1. **开通 Pro。** 用你自己的账号登录 Claude 网页版。第一次用，可以用自己的邮箱按页面提示注册。点左下角头像，进入 **设置 → 账单 → 升级方案**。选 **Pro**，确认月付或年付和结算金额，完成付款。[Claude 网页版](https://claude.ai/) · [Pro 开通说明](https://support.claude.com/en/articles/8325609-how-do-i-sign-up-for-the-pro-plan)
+2. **按提示完成 KYC。** 订阅或使用时如果出现 **KYC** 或 **Verification Portal**，从本人账号内的提示进入官方验证流程。通过后按页面提示继续。验证失败或账号仍受限，可以从帮助中心联系支持或申诉。[身份验证与申诉](https://support.claude.com/en/articles/14328960-identity-verification-on-claude)
+3. **用同一个账号登录 Claude Code。** Pro 生效后，如果你用桌面端，从官网下载 Claude Desktop，登录后打开 **Code** 标签，选一个项目文件夹。如果你用终端，按官方文档装好 CLI，在项目目录里运行 `claude`，按提示用同一个账号登录。[Pro 与 Claude Code](https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-max-or-ultra-plan) · [桌面端下载](https://claude.com/download) · [CLI 快速入门](https://code.claude.com/docs/en/quickstart)
 
-我当时把 Codex 也装在了小 VPS 上，系统日志后来出现了 `Out of memory`。如果只是想让 AI 给安装建议，在自己的电脑上问就行，服务器只需要运行它要提供的服务。[当时的内存日志](docs/media/vps-memory-log.png)
+## 卡住了就从失败的那一步查
 
-### 2. 在 3x-ui 里复制订阅链接
-
-1. 在有管理权限的 VPS 上按项目说明安装 3x-ui，登录面板，确认 Xray 正常运行。安装时显示的面板登录地址用于管理服务。
-2. 在 3x-ui 的 **面板设置 → 订阅** 打开订阅服务。在已配置的入站连接里找到你为设备配置的客户端，复制面板为该客户端生成的订阅链接。面板提供 Clash 格式时，给 Clash Verge 选对应格式。
-3. 确认本地电脑能访问订阅地址。订阅链接用于更新节点配置，里面可能包含访问凭据，和登录管理面板一样需要妥善保管。
-
-[3x-ui 安装说明](https://github.com/MHSanaei/3x-ui/wiki/Installation) · [3x-ui 订阅说明](https://github.com/MHSanaei/3x-ui/wiki/Common-questions-and-problems#13-how-does-the-panel-subscription-link-work)
-
-### 3. 导入 Clash Verge，再开系统代理
-
-1. 打开 Clash Verge 的 **订阅** 页，粘贴自己的订阅地址并导入。导入后点选新配置，在 **代理** 页确认能看到预期的节点。
-2. 切到 **规则** 模式，开启 **系统代理**。先用浏览器打开一个你本来就有权访问的站点，再到客户端的连接列表看请求实际走的是哪条规则。系统代理作用于读取该设置的应用。师兄在家用规则模式，在单位按网络要求让单个应用走专用端口。需要接管不读取系统代理的程序时，再看设备和网络是否允许使用 TUN。
-3. 只有某个应用连不上时，再去看它自己的网络设置。对已获准的 HTTP(S) 代理，Claude Code CLI 可以在启动时读取 `HTTPS_PROXY` 或 `HTTP_PROXY`。桌面 Code 会话按官方文档配置。聊天里提到的桌面启动参数是当时的猜测。
-
-[Clash Verge Rev 订阅导入](https://www.clashverge.dev/guide/profile.html) · [系统代理和 TUN](https://www.clashverge.dev/guide/quickstart.html) · [Claude Code 网络配置](https://code.claude.com/docs/en/network-config)
-
-### 4. 掉线了，从最先失败的那一步查
-
-| 看到的情况 | 先查哪里 |
+| 遇到的问题 | 下一步怎么查 |
 | --- | --- |
-| SSH 一直断，或远程扩展主机反复退出 | 用服务商的网页控制台进服务器。Ubuntu 上用 `free -h` 看内存，用 `sudo journalctl -k --since today` 查断线附近有没有 OOM 记录。 |
-| SSH 能连，但订阅导入失败或列表是空的 | 核对面板订阅服务、对应客户端是否启用或到期、订阅链接的域名和证书，以及客户端是否能访问该地址。导入成功后再测节点。 |
-| 订阅能更新，节点延迟显示 `timeout` | 查 VPS 在线状态、入口服务是否运行、防火墙和正确端口，再看服务商公告或提工单。聊天那次重启没有解决，工单回复说机房临时维护，之后连接恢复。 |
-| 只有 Claude Code 报错，或者屏幕上出现 Portal | 先看服务状态，再核对登录账号、方案和客户端网络设置。明确要求验证时，从账号内的提示进入对应流程。 |
+| SSH 反复掉线 | 先从服务商的网页控制台进 VPS。用 `free -h` 看内存，用 `sudo journalctl -k --since today` 查掉线前后有没有内存不足（OOM）的记录。在内存小的 VPS 上，可以把安装咨询留在自己的电脑上，把服务器的资源留给代理服务。 |
+| 订阅导入失败，或导入后没有节点 | 检查 3x-ui 的订阅服务有没有打开、对应的客户端是否启用或已到期，以及本机能不能访问订阅地址。看到证书报错时，核对域名和证书。 |
+| 有节点，但延迟一直显示 `timeout` | 检查 VPS 是否在线、服务是否在正确的端口监听、网络规则是否放行。仍然超时时，看服务商公告或提工单，确认机房有没有维护。 |
+| 只有 Claude Code 连不上 | 看 Claude 服务状态，确认已经登录开通 Pro 的账号，再检查该客户端的网络设置。使用获准的 HTTP(S) 代理时，CLI 在启动时读取 `HTTPS_PROXY` 或 `HTTP_PROXY`。桌面会话按官方文档配置。 |
 
-[那次掉线的工单截图](docs/media/vps-support-ticket.png) · [Claude 服务状态](https://status.claude.com/) · [桌面端排错](https://code.claude.com/docs/en/desktop#troubleshooting)
+[内存日志示例](docs/media/vps-memory-log.png) · [维护工单示例](docs/media/vps-support-ticket.png) · [Claude 服务状态](https://status.claude.com/) · [Claude Code 网络配置](https://code.claude.com/docs/en/network-config)
 
-> **如果你实在不会的话，就让你的 AI 读一下我这个[原始的聊天文件](docs/chat.md)，让 AI 告诉你怎么做，这是最简单的。**
-
-## Claude Code 用哪个入口？
-
-- **桌面端**，从官网安装 Claude Desktop，用自己的账号登录，打开 **Code** 标签并选中项目文件夹。个人订阅里，Pro、Max 等支持 Claude Code。[官方下载](https://claude.com/download) · [桌面端说明](https://code.claude.com/docs/en/desktop) · [订阅说明](https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-max-or-ultra-plan)
-- **习惯用终端**，按官方指南安装 Claude Code CLI，在项目目录运行 `claude`，按提示登录。[CLI 快速入门](https://code.claude.com/docs/en/quickstart)
-
-我当时看到中文语言选项，还问过师兄是不是下错了。遇到这种情况，先回头核对安装来源和版本。想用中文改稿，可以先让它读一段，指出逻辑跳跃和容易误读的地方，等你确认后再动文件。[官方下载](https://claude.com/download)
-
-## 碰到 KYC、Portal 或账号受限
-
-KYC 指身份验证。Anthropic 的帮助中心提到验证合作方 Persona，我当时看到的则是应用里的 **Verification Portal** 提示。聊到「代理」「工具联动」「以前过没过验证」时，我们都在猜，光看弹窗和用过多少天判断不了触发原因。用自己注册或由组织正式分配的账号，按账号里出现的提示完成官方验证。如果验证失败，或觉得账号被误封，用帮助中心列出的支持或申诉入口。Anthropic 的服务条款禁止共享个人账号和登录凭据。[Claude 身份验证与申诉](https://support.claude.com/en/articles/14328960-identity-verification-on-claude) · [Anthropic 个人服务条款](https://www.anthropic.com/legal/consumer-terms#02-account-creation-and-access)
+> **如果你实在不会，就让你的 AI 读一下我的[原始对话记录](docs/chat.md)，让它告诉你下一步怎么做。**
 
 ## 有问题可以进群聊
 
-**Claude 使用交流群（QQ 群号 `683921826`）**。安装、改稿或使用时卡在哪儿了，都可以带上客户端和报错来聊。截图发之前记得遮住个人信息和链接。发现文档里有地方过时了，也欢迎开 Issue。
+**Claude 使用交流群（QQ 群号 `683921826`）**。卡在哪一步了，可以带上报错来聊。发截图前记得遮住服务器地址、订阅链接和登录信息。发现文档有过时的地方，也欢迎开 Issue。
 
 <a href="assets/qq-group.png"><img src="assets/qq-group.png" alt="QQ 群 683921826 的入群二维码" width="260"></a>
 

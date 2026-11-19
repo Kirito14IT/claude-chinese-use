@@ -1,68 +1,45 @@
-# Claude Code setup and troubleshooting for Chinese-speaking users
+# A beginner's guide to Claude Code
 
 [简体中文](README.md) · English
 
-I wanted to try Claude Code for editing a paper. After asking a more experienced friend for advice, the first thing I got stuck on was SSH access to the VPS. I got the subscription working, then ran into timeouts and account verification. Here's the order I'd check things in if I were doing it again. [Original conversation in Chinese](docs/chat.md)
+I've written this as three steps. If you need to set up a proxy on a network you're authorized to configure, start with the VPS. If your connection already works, skip to step 3 to subscribe to Pro and sign into Claude Code.
 
-## Check availability where you are
+## 1. Rent a VPS
 
-As of November 20, 2026, mainland China is outside Anthropic's supported regions. The policy applies to Claude on the web, Claude Code, the API, and Claude offered through authorized partners. Eligibility depends on your actual location and, where applicable, your organization. Account eligibility is separate from network configuration. [Anthropic's Supported Regions Policy](https://www.anthropic.com/legal/supported-regions)
+1. Open the provider's product page and choose a Linux VPS. Take **DigitalVirt's Los Angeles 9929** line as an example. The entry tier in the screenshot is **¥39 per month**. If that tier sells out and you want the same line right away, choose a higher-priced tier that's still in stock. Check the current price and availability at checkout.
+2. Select **Ubuntu**, check that the provider offers a browser console, then choose a billing period and place your order. The browser console lets you check the server if SSH drops or won't connect.
+3. After the VPS is provisioned, find the server address, SSH port, and login details in the provider's dashboard. Connect from your computer over SSH or open the browser console. Make sure you can open a shell before you install the panel.
 
-## From a VPS to Clash Verge
+[DigitalVirt (referral link)](https://digitalvirt.com/aff.php?aff=1572) · [Plan screenshot](docs/media/vps-plan.png) · [Order screen](docs/media/vps-ubuntu-order.png)
 
-Use this sequence when setting up a proxy on a machine and network you're authorized to use.
+## 2. Export a 3x-ui subscription and import it into Clash Verge
 
-### 1. Rent a Linux VPS and check that you can sign in
+1. **Install the panel.** Follow the project instructions to install **3x-ui** on a VPS you administer. Sign into the panel, set up an inbound and a client for your device, and check that Xray is running. [3x-ui installation guide](https://github.com/MHSanaei/3x-ui/wiki/Installation) · [Inbound configuration](https://github.com/MHSanaei/3x-ui/blob/main/docs/content/docs/en/config/inbounds.mdx)
+2. **Copy the subscription link.** Enable subscriptions under **Panel Settings → Subscription**, then copy the **subscription link** for your client. Choose the Clash format if the panel offers it. This link gives Clash Verge your node configuration. Keep it on your own devices. [3x-ui subscription docs](https://github.com/MHSanaei/3x-ui/wiki/Common-questions-and-problems#13-how-does-the-panel-subscription-link-work)
+3. **Import and activate it.** Install **Clash Verge Rev** on your computer and open **Subscriptions**. Paste the URL, import it, and select the new profile. Check that the node appears under **Proxies**. Switch to **Rule** mode and enable **System Proxy**. Open a site you're allowed to access and check the client's connections list to see which rule matched. [Client download](https://www.clashverge.dev/install.html) · [Importing a subscription](https://www.clashverge.dev/guide/profile.html) · [System proxy screenshot](docs/media/clash-rule-mode.png)
 
-We used a 1 GB Ubuntu VPS. Check that the plan supports a Linux distribution you know and provides a browser console, so you can look at logs if SSH fails. Connect on the SSH port given by your provider and keep the credentials private. Make sure your local network can reach the VPS and you can open a shell before you install the panel. The original chat includes the hosting location, plan screenshots, and the referral link we discussed at the time.
+## 3. Subscribe to Pro and sign into Claude Code
 
-DigitalVirt's Los Angeles 9929 entry tier was listed at **¥39 per month** when we chatted. If it sells out and you still want to order on that same route right away, you'll have to choose a higher-priced tier that's in stock. Check the listed prices and availability when you order. [Plan screenshot from the chat](docs/media/vps-plan.png)
+1. **Subscribe to Pro.** Sign into Claude on the web with your own account. If you're new to Claude, follow the prompts to sign up with your own email address. Open your profile menu in the lower left and go to **Settings → Billing → Upgrade plan**. Choose **Pro**, review the monthly or annual price, and complete checkout. [Claude on the web](https://claude.ai/) · [How to subscribe to Pro](https://support.claude.com/en/articles/8325609-how-do-i-sign-up-for-the-pro-plan)
+2. **Complete KYC if prompted.** If you see **KYC** or **Verification Portal** while subscribing or using Claude, open the official verification flow from your own account. Once you've passed, follow the on-screen instructions to continue. If verification fails or your account remains restricted, use the Help Center to contact support or appeal. [Verification and appeals](https://support.claude.com/en/articles/14328960-identity-verification-on-claude)
+3. **Use the same account in Claude Code.** Once Pro is active, install Claude Desktop from the official site, sign in, open the **Code** tab, and choose a project folder. If you prefer a terminal, install the CLI using the official quickstart, run `claude` in your project directory, and sign in with that same account. [Using Claude Code with Pro](https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-max-or-ultra-plan) · [Desktop download](https://claude.com/download) · [CLI quickstart](https://code.claude.com/docs/en/quickstart)
 
-I installed Codex on the small VPS as well, and the system later logged an `Out of memory` error. If you only need to ask an AI about installing something, you can do that on your own computer and leave the VPS to run the service. [The original memory log](docs/media/vps-memory-log.png)
+## Stuck? Start where it first fails
 
-### 2. Copy the subscription link in 3x-ui
-
-1. Follow the project's installation guide on a VPS you administer. Sign into 3x-ui and check that Xray is running. The panel address shown during installation is where you manage the service.
-2. In 3x-ui, enable the subscription service under **Panel Settings → Subscription**. In your configured inbound, find the client you set up for your device and copy its subscription link. Choose the Clash format for Clash Verge when the panel offers it.
-3. Check that your local machine can reach the subscription URL. This link lets your client update its configuration and may contain access credentials. Keep it as private as the panel login.
-
-[3x-ui installation guide](https://github.com/MHSanaei/3x-ui/wiki/Installation) · [3x-ui subscription docs](https://github.com/MHSanaei/3x-ui/wiki/Common-questions-and-problems#13-how-does-the-panel-subscription-link-work)
-
-### 3. Import it into Clash Verge and enable the system proxy
-
-1. Open **Subscriptions** in Clash Verge and import your subscription URL. Select the new profile and check the **Proxies** page for the expected nodes.
-2. Switch to **Rule** mode and enable **System Proxy**. Try a site you already have permission to access, then look at the client's connections list to see which rule matched. System proxy applies to apps that read that setting. My friend used rule mode at home and a dedicated port for one app at work to fit the office network's requirements. For apps that ignore the system proxy, check whether your device and network allow TUN mode.
-3. If a single app still fails, check its own network settings. The Claude Code CLI reads `HTTPS_PROXY` or `HTTP_PROXY` at startup for an approved HTTP(S) proxy. Follow the official instructions for Desktop Code sessions. The Desktop launch flag in the chat was a guess.
-
-[Importing a subscription in Clash Verge Rev](https://www.clashverge.dev/guide/profile.html) · [System proxy and TUN](https://www.clashverge.dev/guide/quickstart.html) · [Claude Code network configuration](https://code.claude.com/docs/en/network-config)
-
-### 4. When something drops, start where it first fails
-
-| Symptom | What to check first |
+| Problem | What to check next |
 | --- | --- |
-| SSH drops or the remote extension host keeps exiting | Use the provider's web console. On Ubuntu, check memory with `free -h` and use `sudo journalctl -k --since today` to look for out-of-memory messages near the time of the drop. |
-| SSH works but the subscription won't import or lists no nodes | Check the panel's subscription service, whether the client is enabled and still valid, the domain and certificate on the subscription URL, and whether the local client can reach it. Test nodes once the profile imports. |
-| The subscription updates but the node shows `timeout` | Check the VPS status, whether the service is listening on the intended port, and firewall settings. Then check the provider's incident notices or file a support ticket. In our case a reboot didn't help. Support reported data center maintenance, and the connection later recovered. |
-| Only Claude Code fails, or a Portal prompt appears | Check the service status, then your signed-in account, plan, and client network settings. If you're asked to verify, follow the prompt from your own account. |
+| SSH keeps dropping | Open the provider's browser console. Use `free -h` to check memory and `sudo journalctl -k --since today` to look for out-of-memory (OOM) messages near the time of the drop. If memory is tight, ask for setup help on your own computer and leave the VPS resources for the proxy service. |
+| The subscription won't import or lists no nodes | Make sure the subscription service is on, the client is enabled and still valid, and your computer can reach the subscription URL. If you see a certificate error, check the domain and certificate. |
+| The node appears but shows `timeout` | Check that the VPS is online and the service is listening on the right port. Verify that the network rules allow it. If it still times out, check the provider's incident notices or open a ticket to ask about maintenance. |
+| Only Claude Code has trouble connecting | Check the Claude status page, confirm you're signed into the account with Pro, and check your client's network settings. The CLI reads `HTTPS_PROXY` or `HTTP_PROXY` at startup for an approved HTTP(S) proxy. Follow the official docs for Desktop sessions. |
 
-[Support ticket from the outage](docs/media/vps-support-ticket.png) · [Claude service status](https://status.claude.com/) · [Desktop troubleshooting](https://code.claude.com/docs/en/desktop#troubleshooting)
+[Example memory log](docs/media/vps-memory-log.png) · [Example maintenance ticket](docs/media/vps-support-ticket.png) · [Claude status](https://status.claude.com/) · [Claude Code network configuration](https://code.claude.com/docs/en/network-config)
 
-> **If you're still stuck, the easiest thing to do is ask your AI to read the [original chat file](docs/chat.md) and walk you through it.**
-
-## Where to open Claude Code
-
-- **Desktop**. Install Claude Desktop from the official site, sign in with your own account, open the **Code** tab, and select your project folder. Pro and Max are two of the individual plans that support Claude Code. [Official download](https://claude.com/download) · [Desktop guide](https://code.claude.com/docs/en/desktop) · [Subscription help](https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-max-or-ultra-plan)
-- **Terminal**. Install the Claude Code CLI using the official quickstart, run `claude` from your project directory, and sign in when prompted. [CLI quickstart](https://code.claude.com/docs/en/quickstart)
-
-When I saw Chinese in the language menu, I asked my friend if I'd downloaded the right app. If you're unsure, check where you downloaded it from and which version you're running. For a paper, ask it to review one paragraph in Chinese for gaps in the reasoning and ambiguous wording, then wait for your approval before editing the file. [Official download](https://claude.com/download)
-
-## KYC, Portal prompts, and account restrictions
-
-KYC refers to identity verification. Anthropic names Persona as its verification partner, and the prompt I saw in the app was labeled **Verification Portal**. We wondered about the proxy, the tools I'd used together, and whether the account had already been verified. Those were guesses. A prompt and a few weeks of use don't establish what triggered it. Use an account you registered yourself or one your organization assigned to you, and follow the official prompt that appears in your account. If verification fails or you believe your account was suspended in error, use the support or appeal links in the Help Center. Anthropic's terms prohibit sharing individual accounts and sign-in credentials. [Claude verification and appeals](https://support.claude.com/en/articles/14328960-identity-verification-on-claude) · [Anthropic Consumer Terms](https://www.anthropic.com/legal/consumer-terms#02-account-creation-and-access)
+> **If you're still stuck, ask your AI to read my [original chat transcript](docs/chat.md) and tell you what to do next.**
 
 ## Join the conversation
 
-You're welcome in the **Claude discussion group on QQ (group `683921826`)**. If you're stuck getting started, editing a paper, or working in Code, tell us which client you're using and what error you see. Cover personal details and private links before sharing a screenshot. If something in this guide is out of date, feel free to open an issue.
+You're welcome in the **Claude discussion group on QQ (group `683921826`)**. Tell us which step you're on and what error you see. Cover server addresses, subscription links, and login details before sharing screenshots. Feel free to open an issue if something in the guide is out of date.
 
 <a href="assets/qq-group.png"><img src="assets/qq-group.png" alt="Join QQ group 683921826 by scanning this code" width="260"></a>
 
