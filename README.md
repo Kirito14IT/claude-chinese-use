@@ -21,6 +21,7 @@
 ## 2. 用 3x-ui 导出订阅，再导入 Clash Verge
 
 1. **装面板。** 在你管理的 VPS 上按项目说明安装 **3x-ui**。登录面板，为自己的设备配置入站和客户端，确认 Xray 正常运行。（不会装的话，让你的Agent帮你装，prompt:我已经ssh连接好的我的美国云服务器了，帮我往云服务器上装个开源的3x-ui，然后给出导出流量的订阅链接，我复制到本地的clash verge导入流量）
+<img width="1186" height="1146" alt="1795111556736" src="https://github.com/user-attachments/assets/6f07e288-914e-4d37-88c8-8cae304cf85e" />
 
    - 安装 3x-ui　<https://github.com/MHSanaei/3x-ui/wiki/Installation>
    - 入站配置　<https://github.com/MHSanaei/3x-ui/blob/main/docs/content/docs/en/config/inbounds.mdx>
