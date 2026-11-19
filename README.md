@@ -6,23 +6,54 @@
 
 ## 1. 买一台 VPS
 
-1. 打开服务商的产品页，选一台 Linux VPS。拿 **DigitalVirt 洛杉矶 9929** 做例子，套餐截图里的入门档是 **39 元/月**。如果这档售罄，又想马上开通同一条线路，就选还有库存的更高价档。下单时以页面上的价格和库存为准。
-2. 系统选 **Ubuntu**，确认服务商提供网页控制台，再选付款周期、完成下单。网页控制台在 SSH 掉线或连不上时能用来查看服务器状态。
-3. 开通后，在服务商的控制台找到服务器地址、SSH 端口和登录信息。先从自己电脑用 SSH 连进去，也可以通过网页控制台打开终端。确认能登录再装面板。
+**租服务器的地址（推广链接）**　<https://digitalvirt.com/aff.php?aff=1572>
 
-[DigitalVirt（推广链接）](https://digitalvirt.com/aff.php?aff=1572) · [套餐截图](docs/media/vps-plan.png) · [下单界面](docs/media/vps-ubuntu-order.png)
+1. 打开链接后，在产品列表找 **洛杉矶 9929**。下面红框里就是 **39 元/月** 的入门档。要是这档售罄，又想马上开通同一条线路，就选还有库存的更高价档。下单时以商品页的价格和库存为准。
+
+   <a href="docs/media/vps-plan.png"><img src="docs/media/vps-plan.png" alt="洛杉矶 9929 套餐页，红框标出 39 元每月的入门档" width="760"></a>
+
+2. 进到下单页，在 **操作系统** 里选 **Ubuntu**。确认服务商提供网页控制台，再选付款周期、完成下单。SSH 连不上时，可以从网页控制台查看服务器状态。
+
+   <a href="docs/media/vps-ubuntu-order.png"><img src="docs/media/vps-ubuntu-order.png" alt="VPS 下单页，红框标出 Ubuntu 选项" width="700"></a>
+
+3. 开通后，在服务商的控制台找到服务器地址、SSH 端口和登录信息。先从自己电脑用 SSH 连进去，也可以通过网页控制台打开终端。确认能登录再装面板。
 
 ## 2. 用 3x-ui 导出订阅，再导入 Clash Verge
 
-1. **装面板。** 在你管理的 VPS 上按项目说明安装 **3x-ui**。登录面板，为自己的设备配置入站和客户端，确认 Xray 正常运行。[3x-ui 安装说明](https://github.com/MHSanaei/3x-ui/wiki/Installation) · [入站配置](https://github.com/MHSanaei/3x-ui/blob/main/docs/content/docs/en/config/inbounds.mdx)
-2. **复制订阅。** 到 **面板设置 → 订阅** 打开订阅服务，再从客户端条目复制对应的 **订阅链接**。面板提供 Clash 格式时选这个格式。这个链接会把节点配置交给 Clash Verge，留在自己的设备上用。[3x-ui 订阅说明](https://github.com/MHSanaei/3x-ui/wiki/Common-questions-and-problems#13-how-does-the-panel-subscription-link-work)
-3. **导入并启用。** 在电脑上安装 **Clash Verge Rev**，打开 **订阅** 页，粘贴链接、导入并选中新配置。到 **代理** 页确认能看到节点，选 **规则** 模式，再开启 **系统代理**。先用浏览器打开一个你有权访问的站点，到连接列表确认规则有没有生效。[客户端下载](https://www.clashverge.dev/install.html) · [订阅导入](https://www.clashverge.dev/guide/profile.html) · [系统代理设置](docs/media/clash-rule-mode.png)
+1. **装面板。** 在你管理的 VPS 上按项目说明安装 **3x-ui**。登录面板，为自己的设备配置入站和客户端，确认 Xray 正常运行。
+
+   - 安装 3x-ui　<https://github.com/MHSanaei/3x-ui/wiki/Installation>
+   - 入站配置　<https://github.com/MHSanaei/3x-ui/blob/main/docs/content/docs/en/config/inbounds.mdx>
+
+2. **复制订阅。** 到 **面板设置 → 订阅** 打开订阅服务，再从客户端条目复制对应的 **订阅链接**。面板提供 Clash 格式时选这个格式。这个链接会把节点配置交给 Clash Verge，留在自己的设备上用。
+
+   - 订阅设置　<https://github.com/MHSanaei/3x-ui/wiki/Common-questions-and-problems#13-how-does-the-panel-subscription-link-work>
+
+3. **导入并启用。** 在电脑上安装 **Clash Verge Rev**，打开 **订阅** 页，粘贴链接、导入并选中新配置。到 **代理** 页确认能看到节点，在首页按图选 **规则** 模式，再开启 **系统代理**。先用浏览器打开一个你有权访问的站点，到连接列表确认规则有没有生效。
+
+   - 下载 Clash Verge Rev　<https://www.clashverge.dev/install.html>
+   - 导入订阅　<https://www.clashverge.dev/guide/profile.html>
+
+   <a href="docs/media/clash-rule-mode.png"><img src="docs/media/clash-rule-mode.png" alt="Clash Verge 首页，红框标出规则模式，左侧为系统代理开关" width="760"></a>
 
 ## 3. 开通 Pro，登录 Claude Code
 
-1. **开通 Pro。** 用你自己的账号登录 Claude 网页版。第一次用，可以用自己的邮箱按页面提示注册。点左下角头像，进入 **设置 → 账单 → 升级方案**。选 **Pro**，确认月付或年付和结算金额，完成付款。[Claude 网页版](https://claude.ai/) · [Pro 开通说明](https://support.claude.com/en/articles/8325609-how-do-i-sign-up-for-the-pro-plan)
-2. **按提示完成 KYC。** 订阅或使用时如果出现 **KYC** 或 **Verification Portal**，从本人账号内的提示进入官方验证流程。通过后按页面提示继续。验证失败或账号仍受限，可以从帮助中心联系支持或申诉。[身份验证与申诉](https://support.claude.com/en/articles/14328960-identity-verification-on-claude)
-3. **用同一个账号登录 Claude Code。** Pro 生效后，如果你用桌面端，从官网下载 Claude Desktop，登录后打开 **Code** 标签，选一个项目文件夹。如果你用终端，按官方文档装好 CLI，在项目目录里运行 `claude`，按提示用同一个账号登录。[Pro 与 Claude Code](https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-max-or-ultra-plan) · [桌面端下载](https://claude.com/download) · [CLI 快速入门](https://code.claude.com/docs/en/quickstart)
+1. **开通 Pro。** 用你自己的账号登录 Claude 网页版。第一次用，可以用自己的邮箱按页面提示注册。点左下角头像，进入 **设置 → 账单 → 升级方案**。选 **Pro**，确认月付或年付和结算金额，完成付款。
+
+   - Claude 网页版　<https://claude.ai/>
+   - Pro 开通说明　<https://support.claude.com/en/articles/8325609-how-do-i-sign-up-for-the-pro-plan>
+
+2. **按提示完成 KYC。** 如果账号内出现类似下图的验证提示，从 **Open Verification Portal** 或页面提供的入口进入官方流程。通过后按页面提示继续。验证失败或账号仍受限，可以从帮助中心联系支持或申诉。
+
+   - 身份验证与申诉　<https://support.claude.com/en/articles/14328960-identity-verification-on-claude>
+
+   <a href="docs/media/verification-prompt.png"><img src="docs/media/verification-prompt.png" alt="Claude 页面上的 Open Verification Portal 验证入口" width="560"></a>
+
+3. **用同一个账号登录 Claude Code。** Pro 生效后，如果你用桌面端，从官网下载 Claude Desktop，登录后打开 **Code** 标签，选一个项目文件夹。如果你用终端，按官方文档装好 CLI，在项目目录里运行 `claude`，按提示用同一个账号登录。
+
+   - 桌面端下载　<https://claude.com/download>
+   - CLI 快速入门　<https://code.claude.com/docs/en/quickstart>
+   - Pro 与 Claude Code　<https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-max-or-ultra-plan>
 
 ## 卡住了就从失败的那一步查
 
@@ -33,7 +64,17 @@
 | 有节点，但延迟一直显示 `timeout` | 检查 VPS 是否在线、服务是否在正确的端口监听、网络规则是否放行。仍然超时时，看服务商公告或提工单，确认机房有没有维护。 |
 | 只有 Claude Code 连不上 | 看 Claude 服务状态，确认已经登录开通 Pro 的账号，再检查该客户端的网络设置。使用获准的 HTTP(S) 代理时，CLI 在启动时读取 `HTTPS_PROXY` 或 `HTTP_PROXY`。桌面会话按官方文档配置。 |
 
-[内存日志示例](docs/media/vps-memory-log.png) · [维护工单示例](docs/media/vps-support-ticket.png) · [Claude 服务状态](https://status.claude.com/) · [Claude Code 网络配置](https://code.claude.com/docs/en/network-config)
+- Claude 服务状态　<https://status.claude.com/>
+- Claude Code 网络配置　<https://code.claude.com/docs/en/network-config>
+
+<details>
+<summary>对照内存日志和机房维护工单</summary>
+
+<a href="docs/media/vps-memory-log.png"><img src="docs/media/vps-memory-log.png" alt="VPS 网页控制台中的内存不足日志" width="640"></a>
+
+<a href="docs/media/vps-support-ticket.png"><img src="docs/media/vps-support-ticket.png" alt="服务商通过工单回复机房临时维护的情况" width="700"></a>
+
+</details>
 
 > **如果你实在不会，就让你的 AI 读一下我的[原始对话记录](docs/chat.md)，让它告诉你下一步怎么做。**
 
